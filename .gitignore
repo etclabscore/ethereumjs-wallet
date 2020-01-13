@@ -41,4 +41,4 @@ package-lock.json
 .vscode
 
 # build output
-dist
+# dist

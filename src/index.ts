@@ -1,5 +1,6 @@
 import * as crypto from 'crypto'
 import * as ethUtil from 'ethereumjs-util'
+export { default as EthereumHDKey } from "./hdkey";
 
 const bs58check = require('bs58check')
 const randomBytes = require('randombytes')
@@ -199,7 +200,7 @@ interface V1Keystore {
 }
 
 // https://github.com/ethereum/wiki/wiki/Web3-Secret-Storage-Definition
-interface V3Keystore {
+export interface V3Keystore {
   crypto: {
     cipher: string
     cipherparams: {
@@ -337,11 +338,19 @@ export default class Wallet {
     return new Wallet(seed)
   }
 
+
   public static fromV3(
     input: string | V3Keystore,
     password: string,
     nonStrict: boolean = false,
   ): Wallet {
+    return new Wallet(Wallet.fromV3Data(input, password, nonStrict));
+  }
+  public static fromV3Data(
+    input: string | V3Keystore,
+    password: string,
+    nonStrict: boolean = false,
+  ): Buffer {
     const json: V3Keystore =
       typeof input === 'object' ? input : JSON.parse(nonStrict ? input.toLowerCase() : input)
 
@@ -392,7 +401,7 @@ export default class Wallet {
       Buffer.from(json.crypto.cipherparams.iv, 'hex'),
     )
     const seed = runCipherBuffer(decipher, ciphertext)
-    return new Wallet(seed)
+    return seed
   }
 
   /*
@@ -468,11 +477,7 @@ export default class Wallet {
     return ethUtil.toChecksumAddress(this.getAddressString())
   }
 
-  public toV3(password: string, opts?: Partial<V3Params>): V3Keystore {
-    if (!keyExists(this.privateKey)) {
-      throw new Error('This is a public key only wallet')
-    }
-
+  public static dataToV3(password: string, data: Buffer, opts?: Partial<V3Params>): V3Keystore {
     const v3Params: V3ParamsStrict = mergeToV3ParamsWithDefaults(opts)
 
     let kdfParams: KDFParams
@@ -513,7 +518,7 @@ export default class Wallet {
       throw new Error('Unsupported cipher')
     }
 
-    const ciphertext = runCipherBuffer(cipher, this.privKey)
+    const ciphertext = runCipherBuffer(cipher, data)
     const mac = ethUtil.keccak256(
       Buffer.concat([derivedKey.slice(16, 32), Buffer.from(ciphertext)]),
     )
@@ -521,8 +526,6 @@ export default class Wallet {
     return {
       version: 3,
       id: uuidv4({ random: v3Params.uuid }),
-      // @ts-ignore - the official V3 keystore spec omits the address key
-      address: this.getAddress().toString('hex'),
       crypto: {
         ciphertext: ciphertext.toString('hex'),
         cipherparams: { iv: v3Params.iv.toString('hex') },
@@ -535,6 +538,13 @@ export default class Wallet {
         mac: mac.toString('hex'),
       },
     }
+  }
+
+  public toV3(password: string, opts?: Partial<V3Params>): V3Keystore {
+    if (!keyExists(this.privateKey)) {
+      throw new Error('This is a public key only wallet')
+    }
+    return Wallet.dataToV3(password, this.privateKey, opts)
   }
 
   public getV3Filename(timestamp?: number): string {
