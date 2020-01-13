@@ -1,5 +1,6 @@
 import * as crypto from 'crypto'
 import * as ethUtil from 'ethereumjs-util'
+export * from "./hdkey";
 
 const bs58check = require('bs58check')
 const randomBytes = require('randombytes')
