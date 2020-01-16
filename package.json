@@ -1,6 +1,6 @@
 {
   "name": "@etclabscore/ethereumjs-wallet",
-  "version": "0.6.3",
+  "version": "0.0.0-development",
   "description": "Utilities for handling Ethereum keys",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
