@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/etclabscore/ethereumjs-wallet/compare/1.0.0...1.0.1) (2020-01-17)
+
+
+### Bug Fixes
+
+* linting issues that break release ([ce4e80b](https://github.com/etclabscore/ethereumjs-wallet/commit/ce4e80bfc284a2598a33b5fec863c7fcdd7d1d97))
+* test to reflect api changes ([bff9e5b](https://github.com/etclabscore/ethereumjs-wallet/commit/bff9e5be690457aadc5c46ce55ee3ebfcd9c2cf5))
+
 # 1.0.0 (2020-01-17)
 
 
