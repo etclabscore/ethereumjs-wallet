@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/etclabscore/ethereumjs-wallet/compare/1.0.3...1.0.4) (2020-01-17)
+
+
+### Bug Fixes
+
+* add public access ([c500c4d](https://github.com/etclabscore/ethereumjs-wallet/commit/c500c4db732d2c149ea7adbfc3175a76b2855280))
+
 ## [1.0.3](https://github.com/etclabscore/ethereumjs-wallet/compare/1.0.2...1.0.3) (2020-01-17)
 
 
