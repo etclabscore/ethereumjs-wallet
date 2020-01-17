@@ -274,7 +274,7 @@ describe('.toV3()', function () {
   it('should work with Scrypt', async function () {
     this.timeout(0) // never
     const wStatic =
-      '{"version":3,"id":"7e59dc02-8d42-409d-b29a-a8a0f862cc81","address":"b14ab53e38da1c172f877dbc6d65e4a1b0474c3c","crypto":{"ciphertext":"c52682025b1e5d5c06b816791921dbf439afe7a053abb9fac19f38a57499652c","cipherparams":{"iv":"cecacd85e9cb89788b5aab2f93361233"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"dc9e4a98886738bd8aae134a1f89aaa5a502c3fbd10e336136d4d5fe47448ad6","n":262144,"r":8,"p":1},"mac":"27b98c8676dc6619d077453b38db645a4c7c17a3e686ee5adaf53c11ac1b890e"}}'
+      '{"version":3,"id":"7e59dc02-8d42-409d-b29a-a8a0f862cc81","crypto":{"ciphertext":"c52682025b1e5d5c06b816791921dbf439afe7a053abb9fac19f38a57499652c","cipherparams":{"iv":"cecacd85e9cb89788b5aab2f93361233"},"cipher":"aes-128-ctr","kdf":"scrypt","kdfparams":{"dklen":32,"salt":"dc9e4a98886738bd8aae134a1f89aaa5a502c3fbd10e336136d4d5fe47448ad6","n":262144,"r":8,"p":1},"mac":"27b98c8676dc6619d077453b38db645a4c7c17a3e686ee5adaf53c11ac1b890e"}}'
     const wRandom = Wallet.generate()
     const wEthers = new ethersWallet(wRandom.getPrivateKeyString())
 
@@ -325,8 +325,12 @@ describe('.toV3()', function () {
         ).toLowerCase()
 
         assert.deepStrictEqual(JSON.parse(wStatic), JSON.parse(encFixtureWallet))
-        assert.deepStrictEqual(JSON.parse(wStatic), JSON.parse(encFixtureEthersWallet))
-        assert.deepStrictEqual(JSON.parse(encRandomWallet), JSON.parse(encEthersWallet))
+        let ewallet = JSON.parse(encFixtureEthersWallet)
+        delete ewallet.address
+        assert.deepStrictEqual(JSON.parse(wStatic), ewallet)
+        ewallet = JSON.parse(encEthersWallet)
+        delete ewallet.address
+        assert.deepStrictEqual(JSON.parse(encRandomWallet), ewallet)
       }),
     )
   })
