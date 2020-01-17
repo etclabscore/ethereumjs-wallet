@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/etclabscore/ethereumjs-wallet/compare/1.0.2...1.0.3) (2020-01-17)
+
+
+### Bug Fixes
+
+* disable temporarily formatting on prepublish ([264aea6](https://github.com/etclabscore/ethereumjs-wallet/commit/264aea6c483e161081c6aa93b08a5b20a5d601da))
+
 ## [1.0.2](https://github.com/etclabscore/ethereumjs-wallet/compare/1.0.1...1.0.2) (2020-01-17)
 
 
