@@ -9,7 +9,7 @@ export default class EthereumHDKey {
     return new EthereumHDKey(HDKey.fromExtendedKey(base58Key))
   }
 
-  constructor(private readonly _hdkey?: any) { }
+  constructor(private readonly _hdkey?: any) {}
 
   public privateExtendedKey(): Buffer {
     if (!this._hdkey.privateExtendedKey) {

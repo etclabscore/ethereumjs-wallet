@@ -8,16 +8,16 @@ const fixtureseed = Buffer.from(
 )
 const fixturehd = EthereumHDKey.fromMasterSeed(fixtureseed)
 
-describe('.fromMasterSeed()', function () {
-  it('should work', function () {
-    assert.doesNotThrow(function () {
+describe('.fromMasterSeed()', function() {
+  it('should work', function() {
+    assert.doesNotThrow(function() {
       EthereumHDKey.fromMasterSeed(fixtureseed)
     })
   })
 })
 
-describe('.privateExtendedKey()', function () {
-  it('should work', function () {
+describe('.privateExtendedKey()', function() {
+  it('should work', function() {
     assert.strictEqual(
       fixturehd.privateExtendedKey(),
       'xprv9s21ZrQH143K4KqQx9Zrf1eN8EaPQVFxM2Ast8mdHn7GKiDWzNEyNdduJhWXToy8MpkGcKjxeFWd8oBSvsz4PCYamxR7TX49pSpp3bmHVAY',
@@ -25,8 +25,8 @@ describe('.privateExtendedKey()', function () {
   })
 })
 
-describe('.publicExtendedKey()', function () {
-  it('should work', function () {
+describe('.publicExtendedKey()', function() {
+  it('should work', function() {
     assert.strictEqual(
       fixturehd.publicExtendedKey(),
       'xpub661MyMwAqRbcGout4B6s29b6gGQsowyoiF6UgXBEr7eFCWYfXuZDvRxP9zEh1Kwq3TLqDQMbkbaRpSnoC28oWvjLeshoQz1StZ9YHM1EpcJ',
@@ -34,8 +34,8 @@ describe('.publicExtendedKey()', function () {
   })
 })
 
-describe('.fromExtendedKey()', function () {
-  it('should work with public', function () {
+describe('.fromExtendedKey()', function() {
+  it('should work with public', function() {
     const hdnode = EthereumHDKey.fromExtendedKey(
       'xpub661MyMwAqRbcGout4B6s29b6gGQsowyoiF6UgXBEr7eFCWYfXuZDvRxP9zEh1Kwq3TLqDQMbkbaRpSnoC28oWvjLeshoQz1StZ9YHM1EpcJ',
     )
@@ -43,11 +43,11 @@ describe('.fromExtendedKey()', function () {
       hdnode.publicExtendedKey(),
       'xpub661MyMwAqRbcGout4B6s29b6gGQsowyoiF6UgXBEr7eFCWYfXuZDvRxP9zEh1Kwq3TLqDQMbkbaRpSnoC28oWvjLeshoQz1StZ9YHM1EpcJ',
     )
-    assert.throws(function () {
+    assert.throws(function() {
       hdnode.privateExtendedKey()
     }, /^Error: This is a public key only wallet$/)
   })
-  it('should work with private', function () {
+  it('should work with private', function() {
     const hdnode = EthereumHDKey.fromExtendedKey(
       'xprv9s21ZrQH143K4KqQx9Zrf1eN8EaPQVFxM2Ast8mdHn7GKiDWzNEyNdduJhWXToy8MpkGcKjxeFWd8oBSvsz4PCYamxR7TX49pSpp3bmHVAY',
     )
@@ -62,8 +62,8 @@ describe('.fromExtendedKey()', function () {
   })
 })
 
-describe('.deriveChild()', function () {
-  it('should work', function () {
+describe('.deriveChild()', function() {
+  it('should work', function() {
     const hdnode = fixturehd.deriveChild(1)
     assert.strictEqual(
       hdnode.privateExtendedKey(),
@@ -72,15 +72,15 @@ describe('.deriveChild()', function () {
   })
 })
 
-describe('.derivePath()', function () {
-  it('should work with m', function () {
+describe('.derivePath()', function() {
+  it('should work with m', function() {
     const hdnode = fixturehd.derivePath('m')
     assert.strictEqual(
       hdnode.privateExtendedKey(),
       'xprv9s21ZrQH143K4KqQx9Zrf1eN8EaPQVFxM2Ast8mdHn7GKiDWzNEyNdduJhWXToy8MpkGcKjxeFWd8oBSvsz4PCYamxR7TX49pSpp3bmHVAY',
     )
   })
-  it("should work with m/44'/0'/0/1", function () {
+  it("should work with m/44'/0'/0/1", function() {
     const hdnode = fixturehd.derivePath("m/44'/0'/0/1")
     assert.strictEqual(
       hdnode.privateExtendedKey(),
