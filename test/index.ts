@@ -296,12 +296,14 @@ describe('.toV3()', function () {
           p: p,
         })
 
-        const encFixtureEthersWallet = (await fixtureEthersWallet.encrypt(pw, {
-          scrypt: { N: n, r: r, p: p },
-          salt: ethersOpts.salt,
-          iv: ethersOpts.iv,
-          uuid: ethersOpts.uuid,
-        })).toLowerCase()
+        const encFixtureEthersWallet = (
+          await fixtureEthersWallet.encrypt(pw, {
+            scrypt: { N: n, r: r, p: p },
+            salt: ethersOpts.salt,
+            iv: ethersOpts.iv,
+            uuid: ethersOpts.uuid,
+          })
+        ).toLowerCase()
 
         const encRandomWallet = wRandom.toV3String(pw, {
           kdf: 'scrypt',
@@ -313,12 +315,14 @@ describe('.toV3()', function () {
           p: p,
         })
 
-        const encEthersWallet = (await wEthers.encrypt(pw, {
-          scrypt: { N: n, r: r, p: p },
-          salt: ethersOpts.salt,
-          iv: ethersOpts.iv,
-          uuid: ethersOpts.uuid,
-        })).toLowerCase()
+        const encEthersWallet = (
+          await wEthers.encrypt(pw, {
+            scrypt: { N: n, r: r, p: p },
+            salt: ethersOpts.salt,
+            iv: ethersOpts.iv,
+            uuid: ethersOpts.uuid,
+          })
+        ).toLowerCase()
 
         assert.deepStrictEqual(JSON.parse(wStatic), JSON.parse(encFixtureWallet))
         assert.deepStrictEqual(JSON.parse(wStatic), JSON.parse(encFixtureEthersWallet))
@@ -360,7 +364,7 @@ describe('.toV3()', function () {
       fixtureWallet.toV3(pw, { salt: {} })
     }, /^Error: Invalid salt, must be a string \(empty or a non-zero even number of hex characters\) or buffer$/)
   })
-  it.only('should work with empty salt', async function () {
+  it('should work with empty salt', async function () {
     this.timeout(0) // never
     const pw = 'test'
     let salt: any = ''
@@ -410,8 +414,8 @@ describe('.toV3()', function () {
     })
 
     assert.strictEqual(salt, JSON.parse(wStr).crypto.kdfparams.salt)
-    let wEtherWallet = JSON.parse(wEthersStr.toLowerCase());
-    delete wEtherWallet.address;
+    let wEtherWallet = JSON.parse(wEthersStr.toLowerCase())
+    delete wEtherWallet.address
     assert.deepStrictEqual(JSON.parse(wStr), wEtherWallet)
     assert.strictEqual(
       fixtureWallet.getPrivateKeyString(),
@@ -441,9 +445,8 @@ describe('.toV3()', function () {
       uuid: uuid,
     })
 
-
-    wEtherWallet = JSON.parse(wEthersStr.toLowerCase());
-    delete wEtherWallet.address;
+    wEtherWallet = JSON.parse(wEthersStr.toLowerCase())
+    delete wEtherWallet.address
 
     assert.strictEqual('', JSON.parse(wStr).crypto.kdfparams.salt)
     assert.deepStrictEqual(JSON.parse(wStr), wEtherWallet)
@@ -473,9 +476,8 @@ describe('.toV3()', function () {
       uuid: uuid,
     })
 
-
-    wEtherWallet = JSON.parse(wEthersStr.toLowerCase());
-    delete wEtherWallet.address;
+    wEtherWallet = JSON.parse(wEthersStr.toLowerCase())
+    delete wEtherWallet.address
     assert.strictEqual('', JSON.parse(wStr).crypto.kdfparams.salt)
     assert.deepStrictEqual(JSON.parse(wStr), wEtherWallet)
     assert.strictEqual(

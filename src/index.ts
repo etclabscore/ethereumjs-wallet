@@ -1,6 +1,6 @@
 import * as crypto from 'crypto'
 import * as ethUtil from 'ethereumjs-util'
-export { default as EthereumHDKey } from "./hdkey";
+export { default as EthereumHDKey } from './hdkey'
 
 const bs58check = require('bs58check')
 const randomBytes = require('randombytes')
@@ -338,13 +338,12 @@ export default class Wallet {
     return new Wallet(seed)
   }
 
-
   public static fromV3(
     input: string | V3Keystore,
     password: string,
     nonStrict: boolean = false,
   ): Wallet {
-    return new Wallet(Wallet.fromV3Data(input, password, nonStrict));
+    return new Wallet(Wallet.fromV3Data(input, password, nonStrict))
   }
   public static fromV3Data(
     input: string | V3Keystore,
